@@ -2,10 +2,6 @@
 
 > Efficient monitoring and management of CPU status.
 
-[!License](LICENSE)
-[!Build Status](https://github.com/Rick-torrellas/statusq-cpu)
-[!Version](https://github.com/Rick-torrellas/statusq-cpu)
-
 ## 📖 Description
 
 **StatusQ**.cpu is a tool designed to provide accurate, real-time metrics on CPU performance and status. Its purpose is to facilitate observability in systems, allowing developers and administrators to make informed decisions based on the current workload.
