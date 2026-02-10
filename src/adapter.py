@@ -2,9 +2,31 @@ import psutil
 import platform
 from datetime import datetime
 from src.domain import CPUStatus
-from src.ports import StateCheck
+from src.ports import StateCheck, Logger
+from typing import Any
 
 # --- Implementation ---
+
+class AppLogger(Logger):
+    """
+    Implementation of the Logger port using the standard logging library.
+    """
+    def __init__(self, name: str):
+        import logging
+        self.logger = logging.getLogger(name)
+
+    def info(self, message) -> None:
+        self.logger.info(message)
+
+    def debug(self, message: Any) -> None:
+        self.logger.debug(message)
+
+    def warning(self, message) -> None:
+        self.logger.warning(message)
+
+    def error(self, message) -> None:
+        self.logger.error(message)
+
 
 class CPUStateCheck(StateCheck):
     def capture(self) -> CPUStatus:

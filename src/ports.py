@@ -13,3 +13,20 @@ class StateCheck(ABC):
         Required method for capturing current data.
         """
         pass
+
+class Logger(ABC):
+    """
+    Clase abstracta madre para los loggers.
+    """
+    @abstractmethod
+    def info(self, message: str) -> None:
+        pass
+    @abstractmethod
+    def debug(self, message: str) -> None:
+        pass
+    @abstractmethod
+    def warning(self, message: str) -> None:
+        pass
+    @abstractmethod
+    def error(self, message: str) -> None:
+        pass
