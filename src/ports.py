@@ -1,32 +1,19 @@
 from abc import ABC, abstractmethod
-from typing import Any
-
-# --- Abstract Base Class ---
-
-class StateCheck(ABC):
-    """
-    Abstract base class for any hardware status checker.
-    """
-    @abstractmethod
-    def capture(self) -> Any:
-        """
-        Required method for capturing current data.
-        """
-        pass
 
 class Logger(ABC):
-    """
-    Clase abstracta madre para los loggers.
-    """
+    """Define la interfaz para cualquier logger que la aplicación pueda usar."""
     @abstractmethod
-    def info(self, message: str) -> None:
+    def info(self, message: str):
         pass
+
     @abstractmethod
-    def debug(self, message: str) -> None:
+    def debug(self, message: str):
         pass
+
     @abstractmethod
-    def warning(self, message: str) -> None:
+    def warning(self, message: str):
         pass
+
     @abstractmethod
-    def error(self, message: str) -> None:
+    def error(self, message: str):
         pass
