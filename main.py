@@ -2,6 +2,11 @@ from src.adapter import AppLogger
 from src.domain import CPUStateCheck
 from src.ports import Logger
 from src.logs import setup_logging
+import json
+from rich import print
+import sys
+
+#if len(sys.argv) > 1:
 
 def main(logger: Logger, cpu_checker: CPUStateCheck):
     logger.info("Starting application")
@@ -9,9 +14,7 @@ def main(logger: Logger, cpu_checker: CPUStateCheck):
     cpu_data = cpu_checker.capture()
     # logger.debug(cpu_data)
     # display cpy info
-    logger.info(f"Checking hardware: {cpu_data.name}")
-    logger.info(f"Current Temperature: {cpu_data.current_temperature}")
-    logger.info(f"Current Usage: {cpu_data.total_usage_percentage}%")
+    logger.info(print(cpu_data))
 
 if __name__ == "__main__":
     # Set up logging at the entry point of the application
@@ -28,5 +31,10 @@ if __name__ == "__main__":
     # 2. Crear las instancias de los servicios del dominio, inyectando sus dependencias
     cpu_checker = CPUStateCheck(logger=cpu_checker_logger)
 
+    argumentos  = {
+        'logger': root_logger,
+        'cpu_checker': cpu_checker
+    }
+
     # 3. Ejecutar la lógica principal de la aplicación
-    main(logger=root_logger, cpu_checker=cpu_checker)
+    main(**argumentos)

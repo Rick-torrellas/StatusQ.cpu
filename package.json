@@ -1,0 +1,12 @@
+{
+  "name": "statusq.cpu",
+  "version": "1.2.0",
+  "description": "Real-time CPU monitor. Track performance, temperature, and usage stats instantly.",
+  "keywords": ["python"],
+  "author": "ricardo torrellas ricardo.torrejas@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rick-torrellas/statusq.cpu.git"
+  }
+}

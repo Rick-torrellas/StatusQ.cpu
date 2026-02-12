@@ -4,3 +4,9 @@ setup:
     .venv/bin/python -m pip install -r requirements.txt
 test:
     .venv/bin/python -m pytest -v tests/
+install package:
+    .venv/bin/python -m pip install {{package}}
+uninstall package:
+    .venv/bin/python -m pip uninstall {{package}} -y
+freeze:
+    .venv/bin/python -m pip freeze > requirements.txt
