@@ -6,7 +6,6 @@ from src.config import (
     LOG_FILE_CRITICAL,
     LOG_FILE_DEBUG,
     LOG_FILE_ERROR,
-    LOG_FILE_EXCEPTION,
     LOG_FILE_INFO,
     LOG_FILE_WARNING,
 )

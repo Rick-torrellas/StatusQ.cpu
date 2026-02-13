@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Logger(ABC):
     """Define la interfaz para cualquier logger que la aplicación pueda usar."""
     @abstractmethod
