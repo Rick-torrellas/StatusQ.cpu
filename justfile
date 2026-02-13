@@ -10,6 +10,9 @@ dev:
 test:
     uv run pytest -v tests/
 
+init:
+    uv init
+
 setup:
     uv sync
 

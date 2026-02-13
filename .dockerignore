@@ -4,4 +4,3 @@ __pycache__
 logs/
 .git
 .env
-uv.lock
