@@ -9,6 +9,7 @@ from src.ports import Logger
 
 # --- Data Schemas ---
 
+
 @dataclass
 class CPUStatus:
     name: str
@@ -50,7 +51,7 @@ class CPUStateCheck:
         # Carga promedio (Manejo seguro para Windows/Sistemas sin soporte)
         try:
             avg_load = list(psutil.getloadavg())
-        except (AttributeError, OSError):
+        except AttributeError, OSError:
             avg_load = None
 
         # Temperatura (Manejo de errores si falla el sensor)
@@ -80,6 +81,6 @@ class CPUStateCheck:
             system_time=times.system,
             idle_time=times.idle,
             current_temperature=temp,
-            timestamp=datetime.now()
+            timestamp=datetime.now(),
         )
         return cpu_data

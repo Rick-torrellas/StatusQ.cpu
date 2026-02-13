@@ -25,13 +25,17 @@ uninstall package:
 # freeze:
 #    .venv/bin/python -m pip freeze > requirements.txt
 
-format:
-    uv ruff format .
+format-check:
+    uv run ruff format --check .
 
-lint:
+format:
+    uv run ruff format .
+
+
+lint-check:
     uv run ruff check .
     
-lint-fix:
+lint:
    uv run ruff check --fix .
 
 # Docker commands

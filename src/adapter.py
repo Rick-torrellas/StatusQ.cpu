@@ -4,8 +4,9 @@ from src.ports import Logger
 
 
 class AppLogger(Logger):
-    """Una implementación del Logger port que usa la librería estándar 
+    """Una implementación del Logger port que usa la librería estándar
     de logging de Python."""
+
     def __init__(self, name: str):
         self._logger = logging.getLogger(name)
 
