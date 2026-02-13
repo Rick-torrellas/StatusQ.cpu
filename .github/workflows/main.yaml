@@ -14,17 +14,22 @@ jobs:
     - name: Descargar código
       uses: actions/checkout@v4
 
-    - name: Configurar Python
-      uses: actions/setup-python@v4
+    - name: Instalar uv
+      uses: astral-sh/setup-uv@v5
       with:
-        python-version: '3.10'
+        enable-cache: true # Esto hará que tus librerías se guarden para la próxima vez
+
+    - name: Configurar Python
+      run: uv python install # Instala la versión definida en tu pyproject.toml
 
     - name: Instalar dependencias
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest # Por si no está en tu requirements
+      run: uv sync --frozen # Sincroniza usando el archivo uv.lock para total reproducibilidad
 
     - name: Ejecutar Tests
-      run: |
-        pytest
+      run: uv run pytest # Ejecuta pytest dentro del entorno virtual de uv
+
+    - name: Lint con Ruff (Errores y Estilo)
+      run: uv run ruff check .
+
+    - name: Verificar Formato con Ruff (Black-style)
+      run: uv run ruff format --check .

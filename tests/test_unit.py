@@ -3,9 +3,9 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.adapter import CPUStateCheck
+from src.domain import CPUStateCheck
 
-TARGET_MODULE = "src.adapter"
+TARGET_MODULE = "src.domain"
 
 @pytest.fixture
 def mock_psutil():
@@ -40,7 +40,8 @@ def test_capture_complete_data(mock_psutil, mock_platform):
     with patch(f"{TARGET_MODULE}.datetime") as mock_date:
         mock_date.now.return_value = fixed_now
         
-        check = CPUStateCheck()
+        mock_logger = MagicMock()
+        check = CPUStateCheck(logger=mock_logger)
         status = check.capture()
 
         assert status.total_usage_percentage == 20.5
@@ -53,7 +54,8 @@ def test_capture_temperature_exception_handling(mock_psutil, mock_platform):
     """Verifica la resiliencia: si los sensores fallan, la temperatura es None."""
     mock_psutil.sensors_temperatures.side_effect = Exception("Hardware error")
     
-    check = CPUStateCheck()
+    mock_logger = MagicMock()
+    check = CPUStateCheck(logger=mock_logger)
     status = check.capture()
     
     assert status.current_temperature is None
@@ -62,9 +64,11 @@ def test_capture_temperature_exception_handling(mock_psutil, mock_platform):
 
 def test_capture_no_load_avg_support(mock_psutil, mock_platform):
     """Simula un sistema (como Windows antiguo) que no tiene getloadavg."""
-    del mock_psutil.getloadavg  # Eliminamos el método del mock
+    # Forzamos que la llamada lance AttributeError, simulando que no existe o falla
+    mock_psutil.getloadavg.side_effect = AttributeError
     
-    check = CPUStateCheck()
+    mock_logger = MagicMock()
+    check = CPUStateCheck(logger=mock_logger)
     status = check.capture()
     
     assert status.average_load is None
@@ -73,7 +77,8 @@ def test_capture_freq_none(mock_psutil, mock_platform):
     """Verifica que si cpu_freq devuelve None, los valores sean 0.0."""
     mock_psutil.cpu_freq.return_value = None
     
-    check = CPUStateCheck()
+    mock_logger = MagicMock()
+    check = CPUStateCheck(logger=mock_logger)
     status = check.capture()
     
     assert status.current_frequency == 0.0
