@@ -1,18 +1,22 @@
 run:
-    .venv/bin/python main.py
-setup:
-    .venv/bin/python -m pip install -r requirements.txt
+    uv run --env-file .env.prod main.py
+prod:
+    uv run --env-file .env.prod main.py
+dev:
+    uv run --env-file .env.dev main.py
 test:
-    .venv/bin/python -m pytest -v tests/
+    uv run pytest -v tests/
+setup:
+    uv sync
 install package:
-    .venv/bin/python -m pip install {{package}}
+    uv add {{package}}
 uninstall package:
-    .venv/bin/python -m pip uninstall {{package}} -y
-freeze:
-    .venv/bin/python -m pip freeze > requirements.txt
+    uv remove {{package}} 
+# freeze:
+#    .venv/bin/python -m pip freeze > requirements.txt
 format:
-    .venv/bin/python -m ruff format .
+    uv ruff format .
 lint:
-    .venv/bin/python -m ruff check .
+    uv run ruff check .
 lint-fix:
-   .venv/bin/python  -m ruff check --fix .
+   uv run ruff check --fix .

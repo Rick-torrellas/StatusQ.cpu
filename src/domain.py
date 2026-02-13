@@ -1,8 +1,8 @@
-from dataclasses import dataclass, asdict
-from typing import List, Optional
+from dataclasses import dataclass
 from datetime import datetime
-from src.ports import Logger
+from typing import List, Optional
 
+from src.ports import Logger
 
 # --- Data Schemas ---
 
@@ -34,7 +34,8 @@ class CPUStateCheck:
         """Captura el estado actual de la CPU y devuelve un objeto CPUStatus."""
         self.logger.debug("Capturing CPU state...")
 
-        # Aquí iría la lógica real para obtener los datos de la CPU (usando psutil, etc.)
+        # Aquí iría la lógica real para obtener los datos de la CPU 
+        # (usando psutil, etc.)
         # Por ahora, simulamos la data creando una instancia de CPUStatus.
         cpu_data = CPUStatus(
             name="Simulated CPU",

@@ -23,7 +23,7 @@ if __name__ == "__main__":
     # Aquí es donde se "cablea" la aplicación.
     # Se crean las implementaciones concretas y se inyectan en las clases que las 
     # necesitan.
-    
+
     # 1. Crear los loggers específicos usando la clase concreta AppLogger
     root_logger = AppLogger(__name__)
     cpu_checker_logger = AppLogger('src.domain.CPUStateCheck')

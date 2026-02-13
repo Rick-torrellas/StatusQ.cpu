@@ -1,6 +1,15 @@
-# src/logging_config.py
-import logging.config
 import logging
+import logging.config
+
+from src.config import (
+    LOG_FILE,
+    LOG_FILE_CRITICAL,
+    LOG_FILE_DEBUG,
+    LOG_FILE_ERROR,
+    LOG_FILE_EXCEPTION,
+    LOG_FILE_INFO,
+    LOG_FILE_WARNING,
+)
 
 
 class SpecificLevelFilter(logging.Filter):
@@ -23,7 +32,23 @@ LOGGING_CONFIG = {
         'only_debug': {
             '()': SpecificLevelFilter,
             'level': 'DEBUG',
-        }
+        },
+        'only_info': {
+            '()': SpecificLevelFilter,
+            'level': 'INFO',
+        },
+        'only_warning': {
+            '()': SpecificLevelFilter,
+            'level': 'WARNING',
+        },
+        'only_error': {
+            '()': SpecificLevelFilter,
+            'level': 'ERROR',
+        },
+        'only_critical': {
+            '()': SpecificLevelFilter,
+            'level': 'CRITICAL',
+        },
     },
     "formatters": {
         "standard": {
@@ -40,27 +65,64 @@ LOGGING_CONFIG = {
             "formatter": "simple",
             "level": "INFO",  # Solo INFO y superior
         },
+        "file_app": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_FILE,
+            "formatter": "standard",
+            "level": "DEBUG",  # INFO, WARNING, ERROR, CRITICAL
+            "maxBytes": 10485760,
+            "backupCount": 5,
+        },
         "file_info": {
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "logs/app.log",
+            "filename": LOG_FILE_INFO,
             "formatter": "standard",
             "level": "INFO",  # INFO, WARNING, ERROR, CRITICAL
             "maxBytes": 10485760,
             "backupCount": 5,
+            'filters': ['only_info'],
         },
         "file_debug": {
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "logs/debug.log",
+            "filename": LOG_FILE_DEBUG,
             "formatter": "standard",
             "level": "DEBUG",  # DEBUG, INFO, WARNING, ERROR, CRITICAL
             "maxBytes": 10485760,
             "backupCount": 5,
             'filters': ['only_debug'],
         },
+        "file_error": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_FILE_ERROR,
+            "formatter": "standard",
+            "level": "ERROR",  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+            "maxBytes": 10485760,
+            "backupCount": 5,
+            'filters': ['only_error'],
+        },
+        "file_critical": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_FILE_CRITICAL,
+            "formatter": "standard",
+            "level": "CRITICAL",  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+            "maxBytes": 10485760,
+            "backupCount": 5,
+            'filters': ['only_critical'],
+        },
+        "file_warning": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_FILE_WARNING,
+            "formatter": "standard",
+            "level": "WARNING",  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+            "maxBytes": 10485760,
+            "backupCount": 5,
+            'filters': ['only_warning'],
+        },
     },
     "loggers": {
         "": {  # Root logger
-            "handlers": ["console", "file_info", "file_debug"],
+            "handlers": ["console", "file_info", "file_debug", "file_error", 
+            "file_critical", "file_warning"],
             "level": "DEBUG",
             "propagate": True
         }
