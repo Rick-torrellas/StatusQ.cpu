@@ -51,7 +51,7 @@ class CPUStateCheck:
         # Carga promedio (Manejo seguro para Windows/Sistemas sin soporte)
         try:
             avg_load = list(psutil.getloadavg())
-        except AttributeError, OSError:
+        except (AttributeError, OSError):
             avg_load = None
 
         # Temperatura (Manejo de errores si falla el sensor)
