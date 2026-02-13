@@ -1,0 +1,7 @@
+__pycache__
+*.pyc
+*.pyo
+logs/
+.git
+.env
+uv.lock

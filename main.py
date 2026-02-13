@@ -12,8 +12,10 @@ def main(logger: Logger, cpu_checker: CPUStateCheck):
     # Capture CPU state
     cpu_data = cpu_checker.capture()
     # logger.debug(cpu_data)
-    # display cpy info
-    logger.info(print(cpu_data))
+    # Muestra la información de la CPU en la consola con el formato de rich
+    print(cpu_data)
+    # Registra la información en el archivo de log como un string
+    logger.info(f"CPU Data Captured: {cpu_data}")
 
 if __name__ == "__main__":
     # Set up logging at the entry point of the application
