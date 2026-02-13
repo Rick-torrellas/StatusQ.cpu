@@ -1,10 +1,9 @@
+from rich import print
+
 from src.adapter import AppLogger
 from src.domain import CPUStateCheck
-from src.ports import Logger
 from src.logs import setup_logging
-import json
-from rich import print
-import sys
+from src.ports import Logger
 
 #if len(sys.argv) > 1:
 
@@ -22,8 +21,9 @@ if __name__ == "__main__":
 
     # --- Composition Root ---
     # Aquí es donde se "cablea" la aplicación.
-    # Se crean las implementaciones concretas y se inyectan en las clases que las necesitan.
-
+    # Se crean las implementaciones concretas y se inyectan en las clases que las 
+    # necesitan.
+    
     # 1. Crear los loggers específicos usando la clase concreta AppLogger
     root_logger = AppLogger(__name__)
     cpu_checker_logger = AppLogger('src.domain.CPUStateCheck')

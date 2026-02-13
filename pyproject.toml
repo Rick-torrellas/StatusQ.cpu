@@ -1,0 +1,31 @@
+[project]
+name = "statusq.cpu"
+version = "1.0.0"
+description = "Real-time CPU monitor. Track performance, temperature, and usage stats instantly."
+authors = [{name = "Ricardo Torrellas", email = "ricardo.torrejas@gmail.com"}]
+dependencies = [
+    "iniconfig==2.3.0",
+    "numpy==2.4.2",
+    "packaging==26.0",
+    "pluggy==1.6.0",
+    "psutil==7.2.2",
+    "Pygments==2.19.2",
+    "pytest==9.0.2",
+    "python-dateutil==2.9.0.post0",
+    "six==1.17.0",
+]
+
+[tool.ruff]
+# Longitud máxima de línea (estándar es 88 o 100)
+line-length = 88
+
+[tool.ruff.lint]
+# Selecciona las reglas a aplicar
+# E: pycodestyle, F: Pyflakes, I: isort (orden de imports)
+select = ["E", "F", "I"]
+# Ignora reglas específicas si te resultan molestas
+ignore = []
+
+[tool.ruff.format]
+# Ruff también puede formatear tu código automáticamente
+quote-style = "double"

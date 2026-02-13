@@ -10,3 +10,9 @@ uninstall package:
     .venv/bin/python -m pip uninstall {{package}} -y
 freeze:
     .venv/bin/python -m pip freeze > requirements.txt
+format:
+    .venv/bin/python -m ruff format .
+lint:
+    .venv/bin/python -m ruff check .
+lint-fix:
+   .venv/bin/python  -m ruff check --fix .
