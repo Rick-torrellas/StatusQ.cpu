@@ -1,52 +1,84 @@
+# Justfile for CPU monitoring application
+# Provides standardized commands for development, testing, and deployment
+
+# --- Application Execution ---
 run:
-    uv run --env-file .env.prod main.py
+	# Execute the main application in production mode with production environment variables
+	uv run --env-file .env.prod main.py
 
 prod:
-    uv run --env-file .env.prod main.py
+	# Alias for run command - starts production instance
+	uv run --env-file .env.prod main.py
 
 dev:
-    uv run --env-file .env.dev main.py
+	# Execute the main application in development mode with development environment variables
+	uv run --env-file .env.dev main.py
 
 test:
-    uv run pytest -v tests/
+	# Run the test suite with verbose output using pytest
+	uv run pytest -v tests/
 
+# --- Project Initialization & Setup ---
 init:
-    uv init
+	# Initialize a new Python project using uv
+	uv init
 
 setup:
-    uv sync
+	# Synchronize project dependencies according to pyproject.toml/uv.lock
+	uv sync
 
+# --- Package Management ---
 install package:
-    uv add {{package}}
+	# Add a new Python package to the project dependencies
+	# Usage: make install package=requests
+	uv add {{package}}
 
 uninstall package:
-    uv remove {{package}} 
+	# Remove an existing Python package from project dependencies
+	# Usage: make uninstall package=requests
+	uv remove {{package}} 
 
+# # Legacy freeze command - commented out for reference
+# # Generates requirements.txt from current virtual environment
 # freeze:
 #    .venv/bin/python -m pip freeze > requirements.txt
 
+# --- Code Quality & Formatting ---
+check: format-check lint-check
+	# Run all code quality checks (formatting and linting)
+
 format-check:
-    uv run ruff format --check .
+	# Check code formatting compliance without making changes
+	# Exits with non-zero status if formatting issues are found
+	uv run ruff format --check .
 
 format:
-    uv run ruff format .
-
+	# Automatically format code according to ruff rules
+	uv run ruff format .
 
 lint-check:
-    uv run ruff check .
+	# Run linting checks to identify code quality issues without fixing
+	uv run ruff check .
     
 lint:
-   uv run ruff check --fix .
+	# Run linting checks and automatically fix issues where possible
+	uv run ruff check --fix .
 
-# Docker commands
+# --- Docker Commands ---
 build:
-    docker-compose up --build
+	# Build Docker containers using docker-compose
+	# Use this before starting containers when changes are made to Dockerfile
+	docker-compose up --build
 
 up:
-    docker-compose --env-file .env.prod up -d
+	# Start Docker containers in detached mode with production environment variables
+	docker-compose --env-file .env.prod up -d
 
 docker-down:
-    docker-compose down
+	# Stop and remove all running Docker containers defined in docker-compose
+	docker-compose down
 
 docker-shell:
-    docker-compose run --env-file .env.prod --rm --entrypoint /bin/bash statusq-cpu
+	# Open an interactive bash shell in a new container instance
+	# Useful for debugging and inspecting the container environment
+	docker-compose run --env-file .env.prod --rm --entrypoint /bin/bash statusq-cpu

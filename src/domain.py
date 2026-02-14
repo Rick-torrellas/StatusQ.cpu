@@ -12,59 +12,80 @@ from src.ports import Logger
 
 @dataclass
 class CPUStatus:
-    name: str
-    architecture: str
-    physical_cores: Optional[int]
-    logical_cores: Optional[int]
-    current_frequency: float
-    min_frequency: float
-    max_frequency: float
-    total_usage_percentage: float
-    usage_per_core: List[float]
-    average_load: Optional[List[float]]
-    user_time: float
-    system_time: float
-    idle_time: float
-    current_temperature: Optional[float]
-    timestamp: datetime
+    """Data transfer object representing a snapshot of CPU state and metrics."""
+
+    name: str  # CPU model name/identifier
+    architecture: str  # System architecture (e.g., x86_64, ARM)
+    physical_cores: Optional[int]  # Number of physical CPU cores
+    logical_cores: Optional[
+        int
+    ]  # Number of logical cores (including hyperthreading)  # noqa: E501
+    current_frequency: float  # Current CPU frequency in MHz
+    min_frequency: float  # Minimum supported CPU frequency in MHz
+    max_frequency: float  # Maximum supported CPU frequency in MHz
+    total_usage_percentage: float  # Overall CPU usage percentage across all cores
+    usage_per_core: List[float]  # Individual usage percentage for each core
+    average_load: Optional[List[float]]  # System load average over 1, 5, and 15 minutes
+    user_time: float  # Time spent executing user processes
+    system_time: float  # Time spent executing kernel processes
+    idle_time: float  # Time spent idle
+    current_temperature: Optional[
+        float
+    ]  # Current CPU temperature in Celsius (if available)  # noqa: E501
+    timestamp: datetime  # Timestamp of the measurement
 
 
 class CPUStateCheck:
+    """Use case class responsible for capturing CPU state information."""
+
     def __init__(self, logger: Logger):
-        # Recibe un logger ya configurado. No necesita saber cómo se creó.
+        # Initialize with a configured logger instance through dependency injection
+        # The implementation follows the port-adapter pattern, accepting
+        # any Logger port implementation
         self.logger = logger
 
     def capture(self) -> CPUStatus:
-        """Captura el estado actual de la CPU y devuelve un objeto CPUStatus."""
+        """Captures the current CPU state and returns a CPUStatus object.
+
+        Returns:
+            CPUStatus: A dataclass instance containing comprehensive CPU metrics
+
+        Note:
+            Handles platform-specific variations and potential failures gracefully
+            by providing fallback values and logging warnings when necessary.
+        """
         self.logger.debug("Capturing CPU state...")
 
-        # Frecuencia
+        # Frequency metrics - may not be available on all platforms
         freq = psutil.cpu_freq()
         if freq:
             current_freq, min_freq, max_freq = freq.current, freq.min, freq.max
         else:
+            # Fallback values if frequency information is unavailable
             current_freq = min_freq = max_freq = 0.0
 
-        # Tiempos de CPU
+        # CPU time statistics
         times = psutil.cpu_times()
 
-        # Carga promedio (Manejo seguro para Windows/Sistemas sin soporte)
+        # Average load - gracefully handle platforms that don't support this metric
         try:
             avg_load = list(psutil.getloadavg())
         except (AttributeError, OSError):
+            # getloadavg is not available on Windows or may fail on some systems
             avg_load = None
 
-        # Temperatura (Manejo de errores si falla el sensor)
+        # Temperature sensors - handle potential failures or missing sensors
         temp = None
         try:
             temps = psutil.sensors_temperatures()
-            # Tomamos la primera temperatura disponible como referencia
+            # Take the first available temperature reading as reference
             if temps:
                 first_sensor = next(iter(temps.values()))
                 if first_sensor:
                     temp = first_sensor[0].current
-        except Exception:
-            self.logger.warning("Could not retrieve temperature sensors")
+        except Exception as e:
+            # Log warning but don't fail the capture operation
+            self.logger.warning(f"Could not retrieve temperature sensors: {e}")
 
         cpu_data = CPUStatus(
             name=platform.processor(),
