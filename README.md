@@ -3,7 +3,7 @@
 > Efficient monitoring and management of CPU status.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/github/v/tag/Rick-torrellas/StatusQ.cpu?label=version&color=blue)
+![Version](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/Rick-torrellas/StatusQ.cpu/badges/version.json)
 [![Main CI Pipeline](https://github.com/Rick-torrellas/StatusQ.cpu/actions/workflows/main.yaml/badge.svg)](https://github.com/Rick-torrellas/StatusQ.cpu/actions/workflows/main.yaml)
 
 ## 📖 Description

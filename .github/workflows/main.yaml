@@ -19,3 +19,6 @@ jobs:
   Tests:
     needs: [Formatting, Linting] # Esto los hace secuenciales
     uses: ./.github/workflows/test.yaml
+  Versions:
+    needs: [Tests] # Esto los hace secuenciales
+    uses: ./.github/workflows/version.yaml
