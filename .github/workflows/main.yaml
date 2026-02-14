@@ -9,13 +9,13 @@ on:
 jobs:
   # 1. Ejecutar Formateo
   Formatting:
-    uses: ./.github/workflows/format.yml
+    uses: ./.github/workflows/format.yaml
 
   # 2. Ejecutar Linting
   Linting:
-    uses: ./.github/workflows/lint.yml
+    uses: ./.github/workflows/lint.yaml
 
   # 3. Ejecutar Tests (Solo si los anteriores pasaron)
   Tests:
     needs: [Formatting, Linting] # Esto los hace secuenciales
-    uses: ./.github/workflows/tests.yml
+    uses: ./.github/workflows/tests.yaml
