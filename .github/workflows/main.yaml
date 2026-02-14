@@ -1,35 +1,21 @@
-name: Python CI/CD
+name: Main CI Pipeline
 
 on:
   push:
-    branches: [ "main" ] # Se activa al subir cambios a main
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
+  # 1. Ejecutar Formateo
+  Formatting:
+    uses: ./.github/workflows/format.yml
 
-    steps:
-    - name: Descargar código
-      uses: actions/checkout@v4
+  # 2. Ejecutar Linting
+  Linting:
+    uses: ./.github/workflows/lint.yml
 
-    - name: Instalar uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        enable-cache: true # Esto hará que tus librerías se guarden para la próxima vez
-
-    - name: Configurar Python
-      run: uv python install # Instala la versión definida en tu pyproject.toml
-
-    - name: Instalar dependencias
-      run: uv sync --frozen # Sincroniza usando el archivo uv.lock para total reproducibilidad
-
-    - name: Ejecutar Tests
-      run: uv run pytest # Ejecuta pytest dentro del entorno virtual de uv
-
-    - name: Lint con Ruff (Errores y Estilo)
-      run: uv run ruff check .
-
-    - name: Verificar Formato con Ruff (Black-style)
-      run: uv run ruff format --check .
+  # 3. Ejecutar Tests (Solo si los anteriores pasaron)
+  Tests:
+    needs: [Formatting, Linting] # Esto los hace secuenciales
+    uses: ./.github/workflows/tests.yml
