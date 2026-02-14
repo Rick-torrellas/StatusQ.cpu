@@ -5,6 +5,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/version-1.1.0-green)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Rick-torrellas/statusq.cpu/tests.yml?branch=main&label=Tests&logo=pytest&logoColor=white&style=flat-square)](https://github.com/Rick-torrellas/statusq.cpu/actions/workflows/tests.yml)
+[![Tests](https://img.shields.io/github/actions/workflow/status/Rick-torrellas/statusq.cpu/tests.yml?branch=main&label=Tests&logo=pytest&logoColor=white&style=flat-square)](https://github.com/Rick-torrellas/statusq.cpu/actions/workflows/tests.yml)
 
 ## 📖 Description
 
