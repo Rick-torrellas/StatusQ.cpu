@@ -2,6 +2,9 @@
 
 > Efficient monitoring and management of CPU status.
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-green)
+
 ## 📖 Description
 
 **StatusQ**.cpu is a tool designed to provide accurate, real-time metrics on CPU performance and status. Its purpose is to facilitate observability in systems, allowing developers and administrators to make informed decisions based on the current workload.
