@@ -2,10 +2,6 @@ name: Tests  # Workflow name displayed in GitHub Actions UI
 
 # Workflow triggers - defines when this automated pipeline should execute
 on:
-  push:
-    branches: [ "main" ]  # Trigger on code pushes to the main branch
-  pull_request:
-    branches: [ "main" ]  # Trigger when PRs target the main branch
   workflow_call:
 
 jobs:
