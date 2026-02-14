@@ -6,6 +6,7 @@ on:
     branches: [ "main" ]  # Trigger on code pushes to the main branch
   pull_request:
     branches: [ "main" ]  # Trigger when PRs target the main branch
+  workflow_call:
 
 jobs:
   pytest:  # Job identifier - runs pytest test suite
