@@ -1,0 +1,9 @@
+services:
+  statusq-cpu:
+    build: .
+    container_name: statusq-cpu
+    volumes:
+      # Persistencia de logs: mapea la carpeta logs local a la del contenedor
+      - ./logs:/app/logs
+    # Habilita la asignación de una pseudo-TTY para que 'rich' detecte colores
+    tty: true
