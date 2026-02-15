@@ -1,10 +1,9 @@
 import platform
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Optional, cast
+from typing import List, Optional
 
 import psutil
-from psutil._common import scpufreq, scputimes
 
 from src.ports import Logger
 
@@ -54,23 +53,24 @@ class CPUStateCheck:
         self.logger.debug("Capturing CPU state...")
 
         # Frequency metrics - may not be available on all platforms
-        freq: Optional[scpufreq] = psutil.cpu_freq()
+        freq = psutil.cpu_freq()
         if freq is not None:
-            current_freq: float = freq.current
-            min_freq: float = freq.min
-            max_freq: float = freq.max
+            # Use casting to help type checker understand the structure
+            current_freq: float = float(freq.current)
+            min_freq: float = float(freq.min)
+            max_freq: float = float(freq.max)
         else:
             # Fallback values if frequency information is unavailable
             current_freq = min_freq = max_freq = 0.0
 
         # CPU time statistics
-        times: scputimes = psutil.cpu_times()
+        times = psutil.cpu_times()
 
         # Average load - gracefully handle platforms that don't support this metric
         avg_load: Optional[List[float]] = None
         try:
-            load_avg_tuple = psutil.getloadavg()
-            avg_load = list(load_avg_tuple)
+            load_tuple = psutil.getloadavg()
+            avg_load = [float(x) for x in load_tuple]
         except (AttributeError, OSError):
             # getloadavg is not available on Windows or may fail on some systems
             pass
@@ -78,14 +78,14 @@ class CPUStateCheck:
         # Temperature sensors - handle potential failures or missing sensors
         temp: Optional[float] = None
         try:
-            temps_dict = psutil.sensors_temperatures()
+            temps = psutil.sensors_temperatures()
             # Take the first available temperature reading as reference
-            if temps_dict:
-                # Get the first sensor readings list
-                first_sensor_readings = next(iter(temps_dict.values()))
-                if first_sensor_readings and len(first_sensor_readings) > 0:
-                    # Get the current temperature from the first reading
-                    temp = float(first_sensor_readings[0].current)
+            if temps and isinstance(temps, dict):
+                first_sensor_list = next(iter(temps.values()))
+                if first_sensor_list and len(first_sensor_list) > 0:
+                    first_sensor = first_sensor_list[0]
+                    if hasattr(first_sensor, 'current'):
+                        temp = float(first_sensor.current)
         except Exception as e:
             # Log warning but don't fail the capture operation
             self.logger.warning(f"Could not retrieve temperature sensors: {e}")
@@ -96,7 +96,8 @@ class CPUStateCheck:
 
         # CPU usage percentages
         total_usage: float = psutil.cpu_percent(interval=None)
-        per_core_usage: List[float] = cast(List[float], psutil.cpu_percent(interval=None, percpu=True))
+        per_core_usage_raw = psutil.cpu_percent(interval=None, percpu=True)
+        per_core_usage: List[float] = [float(x) for x in per_core_usage_raw]
 
         cpu_data = CPUStatus(
             name=platform.processor() or "Unknown",
@@ -109,9 +110,9 @@ class CPUStateCheck:
             total_usage_percentage=total_usage,
             usage_per_core=per_core_usage,
             average_load=avg_load,
-            user_time=times.user,
-            system_time=times.system,
-            idle_time=times.idle,
+            user_time=float(times.user),
+            system_time=float(times.system),
+            idle_time=float(times.idle),
             current_temperature=temp,
             timestamp=datetime.now(),
         )

@@ -1,5 +1,3 @@
-from rich import print
-
 from src.adapter import AppLogger
 from src.domain import CPUStateCheck
 from src.logs import setup_logging
