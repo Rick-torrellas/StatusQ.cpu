@@ -12,8 +12,12 @@ TARGET_MODULE = "src.domain"
 def mock_psutil():
     with patch(f"{TARGET_MODULE}.psutil") as mocked:
         # Usamos PropertyMock o objetos simples para mayor claridad
-        mocked.cpu_times.return_value = MagicMock(user=10.0, system=5.0, idle=100.0)
-        mocked.cpu_freq.return_value = MagicMock(current=2500.0, min=800.0, max=3500.0)
+        mocked.cpu_times.return_value = MagicMock(
+            user=10.0, system=5.0, idle=100.0
+        )
+        mocked.cpu_freq.return_value = MagicMock(
+            current=2500.0, min=800.0, max=3500.0
+        )
 
         # Mejoramos la lógica de cpu_count
         mocked.cpu_count.side_effect = lambda logical: 4 if not logical else 8

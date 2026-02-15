@@ -22,9 +22,6 @@ def main(logger: Logger, cpu_checker: CPUStateCheck):
 
     # logger.debug(cpu_data)  # Detailed logging commented out for brevity
 
-    # Display formatted CPU information in the console using rich's pretty-printing
-    print(cpu_data)
-
     # Persist CPU data to log files as a structured string representation
     logger.info(f"CPU Data Captured: {cpu_data}")
 
@@ -42,7 +39,9 @@ if __name__ == "__main__":
     # 1. Create specific logger instances using the concrete AppLogger adapter
     #    The adapter implements the Logger port interface
     root_logger = AppLogger(__name__)  # Main application logger
-    cpu_checker_logger = AppLogger("src.domain.CPUStateCheck")  # Domain-specific logger
+    cpu_checker_logger = AppLogger(
+        "src.domain.CPUStateCheck"
+    )  # Domain-specific logger
 
     # 2. Instantiate domain services with their dependencies injected
     #    CPUStateCheck receives its logger through constructor injection
