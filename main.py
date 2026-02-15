@@ -1,5 +1,3 @@
-from rich import print
-
 from src.adapter import AppLogger
 from src.domain import CPUStateCheck
 from src.logs import setup_logging
@@ -21,9 +19,6 @@ def main(logger: Logger, cpu_checker: CPUStateCheck):
     cpu_data = cpu_checker.capture()
 
     # logger.debug(cpu_data)  # Detailed logging commented out for brevity
-
-    # Display formatted CPU information in the console using rich's pretty-printing
-    print(cpu_data)
 
     # Persist CPU data to log files as a structured string representation
     logger.info(f"CPU Data Captured: {cpu_data}")

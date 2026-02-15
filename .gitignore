@@ -4,3 +4,4 @@ logs/*.log
 .pytest_cache
 .ruff_cache
 report/*.json
+tests/*.log

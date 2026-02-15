@@ -16,7 +16,7 @@ dev:
 
 test:
 	# Run the test suite with verbose output using pytest
-	uv run pytest -v tests/
+	uv run pytest -v tests/ --log-file=tests/test.log --log-file-level=DEBUG
 
 # --- Project Initialization & Setup ---
 init:

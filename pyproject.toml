@@ -1,6 +1,6 @@
 [project]
 name = "statusq-cpu"
-version = "1.2.0"
+version = "1.2.1"
 description = "Real-time CPU monitor. Track performance, temperature, and usage stats instantly."
 readme = "README.md"
 authors = [{name = "Ricardo Torrellas", email = "ricardo.torrejas@gmail.com"}]
@@ -8,7 +8,6 @@ requires-python = ">=3.11"
 dependencies = [
     "numpy>=2.4.2",
     "psutil>=7.2.2",
-    "rich>=14.3.2",
 ]
 
 [dependency-groups]
@@ -19,7 +18,7 @@ dev = [
 
 [tool.ruff]
 # Longitud máxima de línea (estándar es 88 o 100)
-line-length = 88
+line-length = 130
 
 [tool.ruff.lint]
 # Selecciona las reglas a aplicar
