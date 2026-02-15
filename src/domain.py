@@ -84,7 +84,7 @@ class CPUStateCheck:
                 first_sensor_list = next(iter(temps.values()))
                 if first_sensor_list and len(first_sensor_list) > 0:
                     first_sensor = first_sensor_list[0]
-                    if hasattr(first_sensor, 'current'):
+                    if hasattr(first_sensor, "current"):
                         temp = float(first_sensor.current)
         except Exception as e:
             # Log warning but don't fail the capture operation

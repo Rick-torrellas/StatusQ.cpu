@@ -66,9 +66,7 @@ LOGGING_CONFIG = {
             "format": "%(asctime)s %(lineno)d [%(levelname)s] %(name)s: %(message)s",
             "datefmt": "%Y-%m-%d %H:%M:%S",  # ISO-like datetime format
         },
-        "simple": {
-            "format": "%(message)s"
-        },  # Minimal format for console output
+        "simple": {"format": "%(message)s"},  # Minimal format for console output
     },
     # Handler definitions - destinations where log records are sent
     "handlers": {
@@ -92,9 +90,7 @@ LOGGING_CONFIG = {
             "level": "INFO",  # Accepts INFO and above but filtered to only INFO
             "maxBytes": 10485760,
             "backupCount": 5,
-            "filters": [
-                "only_info"
-            ],  # Apply filter to restrict to exact INFO level
+            "filters": ["only_info"],  # Apply filter to restrict to exact INFO level
         },
         "file_debug": {
             "class": "logging.handlers.RotatingFileHandler",
