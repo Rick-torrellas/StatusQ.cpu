@@ -1,0 +1,17 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Aquí podrías tener otros jobs como 'tests' o 'lint'
+  
+  publish-image:
+    uses: ./.github/workflows/docker-publish.yaml
+    with:
+      image_name: "StatusQ.cpu"
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

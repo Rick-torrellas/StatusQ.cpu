@@ -82,3 +82,8 @@ docker-shell:
 	# Open an interactive bash shell in a new container instance
 	# Useful for debugging and inspecting the container environment
 	docker-compose run --env-file .env.prod --rm --entrypoint /bin/bash statusq-cpu
+
+changelog:
+	# Generate a changelog from git commit history using git-chglog
+	# Output is saved to CHANGELOG.md
+	uv run gitchangelog > CHANGELOG.md
