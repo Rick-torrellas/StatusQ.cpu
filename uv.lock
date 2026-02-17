@@ -12,6 +12,15 @@ wheels = [
 ]
 
 [[package]]
+name = "gitchangelog"
+version = "3.0.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/12/e3/9b5c8f1c80a675da2bba0a131427273f255d6e8fa767553f30f2bdf1d557/gitchangelog-3.0.4.tar.gz", hash = "sha256:3d8d6a730450fbd5b0a9bc58d0dd3e269c967d7eb4fece0c5cff4372a3f77421", size = 72565, upload-time = "2018-12-21T14:01:07.783Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9d/f9/554f9d1e2031a330148299b81ed7d6d5f1ef8969154384ca4ae8dd403b7a/gitchangelog-3.0.4-py2.py3-none-any.whl", hash = "sha256:45f8b8e64cece0d9bb03a35ecd8ee62c1c7157f8dac0ef3cb68381bfcc1bde29", size = 54625, upload-time = "2018-12-21T14:01:05.011Z" },
+]
+
+[[package]]
 name = "iniconfig"
 version = "2.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -200,6 +209,7 @@ name = "statusq-cpu"
 version = "1.2.1"
 source = { virtual = "." }
 dependencies = [
+    { name = "gitchangelog" },
     { name = "numpy" },
     { name = "psutil" },
 ]
@@ -212,6 +222,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "gitchangelog", specifier = ">=3.0.4" },
     { name = "numpy", specifier = ">=2.4.2" },
     { name = "psutil", specifier = ">=7.2.2" },
 ]

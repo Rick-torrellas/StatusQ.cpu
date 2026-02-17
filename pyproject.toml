@@ -6,6 +6,7 @@ readme = "README.md"
 authors = [{name = "Ricardo Torrellas", email = "ricardo.torrejas@gmail.com"}]
 requires-python = ">=3.11"
 dependencies = [
+    "gitchangelog>=3.0.4",
     "numpy>=2.4.2",
     "psutil>=7.2.2",
 ]
