@@ -1,7 +1,7 @@
-from src.adapter import AppLogger
-from src.domain import CPUStateCheck
+from core_cpu_monitor import CPUStateCheck
+from core_log_engine import AppLogger, Logger
+
 from src.logs import setup_logging
-from src.ports import Logger
 
 # if len(sys.argv) > 1:  # Command-line argument handling (commented out)
 

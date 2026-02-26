@@ -1,15 +1,13 @@
 name: CD Pipeline
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
 
 jobs:
-  # Aquí podrías tener otros jobs como 'tests' o 'lint'
   
   publish-image:
     uses: ./.github/workflows/docker-publish.yaml
+    if: startsWith(github.ref, 'refs/tags/v')
     with:
       image_name: "statusq.cpu"
     secrets:

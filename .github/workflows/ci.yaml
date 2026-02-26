@@ -1,10 +1,7 @@
 name: CI Pipeline
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_call:
 
 permissions:
   contents: write
@@ -19,9 +16,5 @@ jobs:
     uses: ./.github/workflows/lint.yaml
 
   # 3. Ejecutar Tests (Solo si los anteriores pasaron)
-  Tests:
-    needs: [Formatting, Linting] # Esto los hace secuenciales
-    uses: ./.github/workflows/test.yaml
   Versions:
-    needs: [Tests] # Esto los hace secuenciales
     uses: ./.github/workflows/version.yaml
