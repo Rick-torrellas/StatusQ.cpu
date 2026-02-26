@@ -1,6 +1,7 @@
 import logging
 import logging.config
-from typing import Optional, Union
+
+from core_log_engine import SpecificLevelFilter
 
 from src.config import (
     LOG_FILE,
@@ -10,29 +11,6 @@ from src.config import (
     LOG_FILE_INFO,
     LOG_FILE_WARNING,
 )
-
-
-class SpecificLevelFilter(logging.Filter):
-    """Custom logging filter that only allows records with a specific log level."""
-
-    def __init__(self, level: Union[int, str, None] = None) -> None:
-        super().__init__()
-        # Store the target level for filtering
-        # If level is provided as string (e.g., "INFO"), convert to
-        # corresponding integer constant
-        if isinstance(level, str):
-            self.level: Optional[int] = getattr(logging, level.upper())
-        else:
-            self.level = level
-
-    def filter(self, record: logging.LogRecord) -> bool:
-        """Determine if the specified record should be logged.
-
-        Returns:
-            bool: True only if the record's level exactly matches the configured level
-        """
-        return record.levelno == self.level
-
 
 LOGGING_CONFIG = {
     "version": 1,  # Configuration schema version required by dictConfig
